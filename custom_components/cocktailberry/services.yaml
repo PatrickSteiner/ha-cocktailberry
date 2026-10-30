@@ -1,0 +1,44 @@
+prepare_cocktail:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: cocktailberry
+    cocktail:
+      required: true
+      example: "Sidecar"
+      selector:
+        text:
+    volume:
+      required: true
+      default: 250
+      selector:
+        number:
+          min: 25
+          max: 1000
+          step: 5
+          unit_of_measurement: ml
+    alcohol_factor:
+      default: 100
+      selector:
+        number:
+          min: 0
+          max: 200
+          step: 5
+          unit_of_measurement: "%"
+    virgin:
+      default: false
+      selector:
+        boolean:
+stop_preparation:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: cocktailberry
+refresh:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: cocktailberry

@@ -1,0 +1,183 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "CocktailBerry",
+        "description": "Connect to the CocktailBerry v2 web API.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "maker_password": "Maker password"
+        },
+        "data_description": {
+          "host": "IP or hostname of the Raspberry Pi",
+          "port": "Port of the CocktailBerry API (default 8000)",
+          "maker_password": "Only needed if a maker password is set in CocktailBerry"
+        }
+      },
+      "reconfigure": {
+        "title": "CocktailBerry",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "maker_password": "Maker password"
+        },
+        "data_description": {
+          "host": "IP or hostname of the Raspberry Pi",
+          "port": "Port of the CocktailBerry API (default 8000)",
+          "maker_password": "Only needed if a maker password is set in CocktailBerry"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Maker password",
+        "description": "The maker password was rejected. Enter the current one.",
+        "data": {
+          "maker_password": "Maker password"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot reach the CocktailBerry API. Is v2 (web) running and the port correct?",
+      "invalid_auth": "Maker password rejected (too many attempts lock you out for a while).",
+      "not_cocktailberry": "The device answered, but it is not a CocktailBerry API."
+    },
+    "abort": {
+      "already_configured": "This machine is already configured.",
+      "reauth_successful": "Password updated.",
+      "reconfigure_successful": "Connection updated."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "CocktailBerry options",
+        "data": {
+          "allow_prepare": "Allow starting cocktails from Home Assistant",
+          "max_hand_add": "Max. hand-added ingredients per cocktail"
+        },
+        "data_description": {
+          "allow_prepare": "Off by default: nobody can see from HA whether a glass is under the outlet. Enables the prepare button and service.",
+          "max_hand_add": "Cocktails with more hand-added ingredients are hidden"
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "mixing": {
+        "name": "Mixing"
+      }
+    },
+    "button": {
+      "prepare": {
+        "name": "Prepare cocktail"
+      },
+      "stop": {
+        "name": "Stop preparation"
+      },
+      "refresh": {
+        "name": "Refresh bottles and recipes"
+      }
+    },
+    "number": {
+      "volume": {
+        "name": "Volume"
+      },
+      "strength": {
+        "name": "Strength"
+      }
+    },
+    "select": {
+      "cocktail": {
+        "name": "Cocktail"
+      }
+    },
+    "switch": {
+      "virgin": {
+        "name": "Virgin"
+      }
+    },
+    "sensor": {
+      "status": {
+        "name": "Status",
+        "state": {
+          "validation_ok": "Ready",
+          "in_progress": "Mixing",
+          "finished": "Finished",
+          "canceled": "Canceled",
+          "not_enough_ingredients": "Not enough ingredients",
+          "addon_error": "Addon error",
+          "waiting_for_payment": "Waiting for payment",
+          "no_waiter_logged_in": "No waiter logged in",
+          "no_glass_detected": "No glass detected"
+        }
+      },
+      "progress": {
+        "name": "Progress"
+      },
+      "message": {
+        "name": "Message"
+      },
+      "last_cocktail": {
+        "name": "Last cocktail"
+      },
+      "available_cocktails": {
+        "name": "Available cocktails"
+      },
+      "version": {
+        "name": "Version"
+      },
+      "bottle": {
+        "name": "Bottle {number}"
+      }
+    }
+  },
+  "services": {
+    "prepare_cocktail": {
+      "name": "Prepare cocktail",
+      "description": "Starts a cocktail. Requires 'Allow starting cocktails' in the options.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Machine",
+          "description": "Only needed with several machines"
+        },
+        "cocktail": {
+          "name": "Cocktail",
+          "description": "Name or recipe ID"
+        },
+        "volume": {
+          "name": "Volume",
+          "description": "Volume in ml"
+        },
+        "alcohol_factor": {
+          "name": "Strength",
+          "description": "Alcohol in % of the recipe (100 = original)"
+        },
+        "virgin": {
+          "name": "Virgin",
+          "description": "Prepare without alcohol (if the recipe allows it)"
+        }
+      }
+    },
+    "stop_preparation": {
+      "name": "Stop preparation",
+      "description": "Cancels the running preparation.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Machine",
+          "description": "Only needed with several machines"
+        }
+      }
+    },
+    "refresh": {
+      "name": "Refresh",
+      "description": "Reloads bottles, recipes and status.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Machine",
+          "description": "Only needed with several machines"
+        }
+      }
+    }
+  }
+}
